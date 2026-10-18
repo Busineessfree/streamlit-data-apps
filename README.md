@@ -14,6 +14,7 @@ filtered view and an **About the data** panel with the method, coverage and limi
 | **Company Financials Explorer** | US and India quarterly results, UK and European accounts, global earnings | deploy pending (runs locally) | `apps/company_financials/streamlit_app.py` | [us-quarterly-results](https://fliarbi.com/datasets/us-quarterly-results/), [india-quarterly-results](https://fliarbi.com/datasets/india-quarterly-results/), [uk-company-financials-2019-2025](https://fliarbi.com/datasets/uk-company-financials-2019-2025/), [european-company-financials](https://fliarbi.com/datasets/european-company-financials/), [company-earnings-results](https://fliarbi.com/datasets/company-earnings-results/) |
 | **Corporate Deals and Events Tracker** | M&A, IPOs, layoffs, contract wins, lawsuits, corporate events | deploy pending (runs locally) | `apps/corporate_deals/streamlit_app.py` | [mergers-acquisitions-2019-2026](https://fliarbi.com/datasets/mergers-acquisitions-2019-2026/), [ipo-tracker-2019-2026](https://fliarbi.com/datasets/ipo-tracker-2019-2026/), [layoffs-2019-2026](https://fliarbi.com/datasets/layoffs-2019-2026/), [contract-wins-2019-2026](https://fliarbi.com/datasets/contract-wins-2019-2026/), [lawsuits-2019-2026](https://fliarbi.com/datasets/lawsuits-2019-2026/), [corporate-events-2019-2026](https://fliarbi.com/datasets/corporate-events-2019-2026/) |
 | **Company Directory and Web Tech** | Open company database, website technology stacks, Google Play apps | deploy pending (runs locally) | `apps/company_directory/streamlit_app.py` | [open-company-database](https://fliarbi.com/datasets/open-company-database/), [website-technology-stack](https://fliarbi.com/datasets/website-technology-stack/), [google-play-apps-2026](https://fliarbi.com/datasets/google-play-apps-2026/) |
+| **Patent Trends** | Patent filings by year, technology class, office and assignee (aggregates) | deploy pending (runs locally) | `apps/patent_trends/streamlit_app.py` | aggregate bundle in `data/` |
 | **Business News Pulse** | Monthly volume, sentiment and rising topics in business news, 2019–2026 (aggregates) | deploy pending (runs locally) | `apps/business_news_pulse/streamlit_app.py` | [corporate-events-2019-2026](https://fliarbi.com/datasets/corporate-events-2019-2026/) |
 
 ## How the apps get their data
@@ -68,6 +69,10 @@ Create one app per folder: repository `streamlit-data-apps`, branch `main`, main
 **Company Directory and Web Tech**
 
 ![Company Directory and Web Tech](docs/screenshots/company_directory.png)
+
+**Patent Trends**
+
+![Patent Trends](docs/screenshots/patent_trends.png)
 
 **Business News Pulse**
 

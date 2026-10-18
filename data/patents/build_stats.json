@@ -1,0 +1,24 @@
+{
+ "coverage": {
+  "shards_total": 7,
+  "shards_answering": 6,
+  "missing_shards": [
+   "2 (192.168.50.6)"
+  ],
+  "rows_seen": 92593512,
+  "rows_in_corpus": 108034545,
+  "note": "Rows were spread round-robin over the shards at ingest, so the answering shards are an even random subset: shares, rates and averages are unbiased; absolute counts cover only the answering share."
+ },
+ "individual_assignee_names_dropped": 75972,
+ "org_assignee_names_kept": 383261,
+ "years_full": "2006-2025",
+ "partial_year": "2026 (publications to 2026-04-21)",
+ "tables": {
+  "by_class_year_office.parquet": 173075,
+  "by_year_office.parquet": 1689,
+  "class_summary.parquet": 677,
+  "cpc_classes.parquet": 681,
+  "top_assignees_by_class_year.parquet": 201024,
+  "top_assignees_by_year.parquet": 22667
+ }
+}
