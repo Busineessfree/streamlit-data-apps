@@ -4,27 +4,49 @@ from __future__ import annotations
 import io
 import json
 import os
+import sys
 import urllib.request
 from pathlib import Path
 
 import pandas as pd
-import pyarrow.parquet as pq
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 META = json.loads((ROOT / "common" / "meta.json").read_text(encoding="utf-8"))
 # For offline tests: a directory holding <key>.parquet copies of the published files.
 LOCAL_DIR = os.environ.get("FLIAR_PARQUET_DIR")
+# True when running in the browser (stlite / Pyodide). There is no socket networking there, so files are
+# downloaded with a synchronous XMLHttpRequest (allowed inside the Web Worker stlite runs Python in), and parquet is
+# read with fastparquet, which stlite already loads (pyarrow would be a large extra download).
+IS_PYODIDE = sys.platform == "emscripten" or "pyodide" in sys.modules
+# Optional JSON map {dataset key: URL} that overrides the published parquet URL, e.g. a column-trimmed copy
+# served next to a static page. Ignored when unset.
+URL_OVERRIDES = json.loads(os.environ.get("FLIAR_PARQUET_URLS") or "{}")
 
 
 def meta(key: str) -> dict:
     return META[key]
 
 
+def _browser_get(url: str) -> bytes:
+    from js import XMLHttpRequest  # type: ignore  # Pyodide only
+
+    xhr = XMLHttpRequest.new()
+    xhr.open("GET", url, False)
+    xhr.responseType = "arraybuffer"
+    xhr.send(None)
+    if xhr.status != 200:
+        raise RuntimeError(f"Download failed ({xhr.status}): {url}")
+    return xhr.response.to_bytes()
+
+
 def _fetch(key: str) -> bytes | str:
     if LOCAL_DIR and (Path(LOCAL_DIR) / f"{key}.parquet").exists():
         return str(Path(LOCAL_DIR) / f"{key}.parquet")
-    req = urllib.request.Request(META[key]["parquet"], headers={"User-Agent": "fliar-streamlit-apps/1.0"})
+    url = URL_OVERRIDES.get(key) or META[key]["parquet"]
+    if IS_PYODIDE:
+        return _browser_get(url)
+    req = urllib.request.Request(url, headers={"User-Agent": "fliar-streamlit-apps/1.0"})
     with urllib.request.urlopen(req, timeout=120) as r:
         return r.read()
 
@@ -45,9 +67,16 @@ def load(key: str, columns: tuple[str, ...]) -> pd.DataFrame:
     """Read only the needed columns of a published dataset sample."""
     src = _fetch(key)
     f = io.BytesIO(src) if isinstance(src, bytes) else src
-    pf = pq.ParquetFile(f)
-    cols = [c for c in columns if c in pf.schema_arrow.names]
-    df = pf.read(columns=cols).to_pandas()
+    if IS_PYODIDE:
+        import fastparquet
+
+        pf = fastparquet.ParquetFile(f)
+        df = pf.to_pandas(columns=[c for c in columns if c in pf.columns])
+    else:
+        import pyarrow.parquet as pq
+
+        pf = pq.ParquetFile(f)
+        df = pf.read(columns=[c for c in columns if c in pf.schema_arrow.names]).to_pandas()
     del src
     return _shrink(df)
 
@@ -55,7 +84,7 @@ def load(key: str, columns: tuple[str, ...]) -> pd.DataFrame:
 @st.cache_data(show_spinner=False, max_entries=32)
 def load_bundle(theme: str, name: str) -> pd.DataFrame:
     """Read an aggregate parquet committed under data/<theme>/<name>.parquet."""
-    return pd.read_parquet(ROOT / "data" / theme / f"{name}.parquet")
+    return pd.read_parquet(ROOT / "data" / theme / f"{name}.parquet", engine="fastparquet" if IS_PYODIDE else "auto")
 
 
 def bundle_names(theme: str) -> list[str]:
