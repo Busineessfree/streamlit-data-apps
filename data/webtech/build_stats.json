@@ -1,0 +1,37 @@
+{
+ "source": "HTTP Archive / Chrome UX Report (public web crawl data)",
+ "coverage": {
+  "shards_total": 14,
+  "shards_answering": 13,
+  "missing_shards": [
+   "2 (192.168.50.6)"
+  ],
+  "pages_seen": 29132323,
+  "crawl_dates": [
+   "2025-05-01",
+   "2026-05-01"
+  ],
+  "note": "Rows are sharded by cityHash64(domain), so a missing shard removes an even hash sample of domains: shares and pass rates are unbiased; absolute page counts cover only the answering shards."
+ },
+ "crawls": [
+  "2025-05-01",
+  "2026-05-01"
+ ],
+ "pages": {
+  "2025-05-01": 14585243,
+  "2026-05-01": 14547080
+ },
+ "technologies_detected_latest": 3564,
+ "company_sites_compared": 2079163,
+ "tables": {
+  "categories.parquet": 55,
+  "cwv_by_platform.parquet": 255,
+  "overview_by_rank.parquet": 10,
+  "stack_size.parquet": 155,
+  "structured_data_types.parquet": 200,
+  "technologies_top300.parquet": 300,
+  "technology_by_rank.parquet": 2962,
+  "technology_by_tld.parquet": 9144,
+  "tlds.parquet": 122
+ }
+}

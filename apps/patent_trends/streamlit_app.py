@@ -129,5 +129,5 @@ ui.table(show.sort_values("publications", ascending=False),
          ["cpc_class", "section_title", "cpc_title_short", "publications", "granted", "grant_share", "avg_citations",
           "pub_2015", "pub_2020", "pub_2025", "cagr_2015_2025", "cagr_2020_2025", "share_2025",
           "share_change_pp_2020_2025", "cn_share_2025"], "patent_class_summary")
-ui.about_bundle(T)
+ui.about_bundle(T, {"Aggregates on Hugging Face": "https://huggingface.co/datasets/fliarbi/patent-trends-aggregates"})
 ui.footer()

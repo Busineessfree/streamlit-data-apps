@@ -139,5 +139,6 @@ st.subheader("Monthly topic × country table")
 ui.table(f.sort_values(["month", "articles"], ascending=[False, False]),
          ["month", "topic_group", "topic", "country", "articles", "positive", "negative", "neutral"],
          "business_news_monthly_topic_country")
-ui.about_bundle(T, None, related=["corporate-events-2019-2026"])
+ui.about_bundle(T, {"Aggregates on Hugging Face": "https://huggingface.co/datasets/fliarbi/business-news-pulse-aggregates"},
+                related=["corporate-events-2019-2026"])
 ui.footer()

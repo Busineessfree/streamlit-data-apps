@@ -30,7 +30,7 @@
  "country_specified_share": 0.481,
  "topics": 33,
  "sectors": 60,
- "subtopics": 470,
+ "subtopics": 469,
  "definition": "Business & financial news = articles whose top-scoring topic label sits under Business & Industrial, Finance or Real Estate.",
  "sentiment_method": "Each article carries model sentiment labels (extreme/very/fair/slight x positive/negative, or none). The top-scoring label decides the article's polarity. Net sentiment = (positive - negative) / all articles x 100. Tone = mean of the label weight (extreme 1, very 0.75, fair 0.5, slight 0.25, negative sign for negative, 0 for none) x 100.",
  "generated": "2026-10-18"
