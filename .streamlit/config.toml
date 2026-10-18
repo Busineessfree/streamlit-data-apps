@@ -1,0 +1,12 @@
+[theme]
+primaryColor = "#2a78d6"
+
+[server]
+headless = true
+maxUploadSize = 5
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
